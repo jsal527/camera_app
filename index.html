@@ -1,28 +1,38 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>QR Code Scanner</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-    <link rel="stylesheet" href="src/styles.css" />
-    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
-  </head>
+<script src="html5-qrcode.min.js"></script>
+<style>
+  .result{
+    background-color: green;
+    color:#fff;
+    padding:20px;
+  }
+  .row{
+    display:flex;
+  }
+</style>
 
-  <body>
-    <div id="container">
-      <h1>QR Code Scanner</h1>
 
-      <a id="btn-scan-qr">
-        <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/07/1499401426qr_icon.svg">
-      <a/>
+<div class="row">
+  <div class="col">
+    <div style="width:500px;" id="reader"></div>
+  </div>
+  <div class="col" style="padding:30px;">
+    <h4>SCAN RESULT</h4>
+    <div id="result">Result Here</div>
+  </div>
+</div>
 
-      <canvas hidden="" id="qr-canvas"></canvas>
 
-      <div id="qr-result" hidden="">
-        <b>Data:</b> <span id="outputData"></span>
-      </div>    
-    </div>
+<script type="text/javascript">
+function onScanSuccess(qrCodeMessage) {
+    document.getElementById('result').innerHTML = '<span class="result">'+qrCodeMessage+'</span>';
+}
 
-    <script src="./src/qrCodeScanner.js"></script>
-  </body>
-</html>
+function onScanError(errorMessage) {
+  //handle scan error
+}
+
+var html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader", { fps: 10, qrbox: 250 });
+html5QrcodeScanner.render(onScanSuccess, onScanError);
+
+</script>
